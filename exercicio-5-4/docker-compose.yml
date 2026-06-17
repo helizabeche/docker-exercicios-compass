@@ -1,0 +1,4 @@
+services:
+  worker:
+    image: alpine
+    command: sh -c "while true; do echo Worker executando; sleep 30; done"

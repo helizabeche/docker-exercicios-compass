@@ -1,0 +1,33 @@
+# Stage 1
+FROM node:22 AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+RUN npm run build
+
+# Stage 2
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/dist.txt .
+
+CMD ["cat", "dist.txt"]
+
+# Exercício 2.4
+
+Foi criado um Dockerfile utilizando Multi-stage Build.
+
+Foram geradas duas imagens:
+
+- node-sem-multistage
+- node-com-multistage
+
+Resultado: a imagem criada com Multi-stage Build apresentou tamanho menor por conter apenas o artefato final necessário para execução.
+
+![Build](/imagens/exercicio-2-4-build.png)
+
+![Comparação](imagens/exercicio-2-4-comparacao.png)
