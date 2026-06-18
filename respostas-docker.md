@@ -132,7 +132,6 @@ O build da imagem ocorreu corretamente e apenas os arquivos necessários foram i
 #### Evidência
 
 ![Exercício 2.3](./imagens/exercicio-2-3.webp)
-![Exercício 2.3](./imagens/exercicio-2-3b.webp)
 
 
 ---
