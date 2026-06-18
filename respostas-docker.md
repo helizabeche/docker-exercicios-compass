@@ -1,7 +1,6 @@
 # Exercícios Docker — Compass UOL
 
-Este documento contém a resolução dos exercícios de Docker do nível básico ao intermediário. Cada exercício apresenta comandos executados, explicação do processo e evidências visuais.
-
+Autoria: Helizabeche 
 ---
 
 ## Nível 1 — Fundamentos
@@ -143,7 +142,9 @@ docker run --rm node-com-multistage
 
 #### Resultado
 
-A imagem final com multi-stage (`node-com-multistage`) ficou com **12.9MB**, enquanto a imagem sem multi-stage (`node-sem-multistage`) ficou com **1.63GB** — uma redução de mais de 99%. Isso ocorre porque o stage final usa `alpine` e contém apenas o artefato gerado, sem as dependências de build do Node.js.
+Durante o processo foi encontrado um erro: o `Dockerfile` principal referenciava `dist/index.js` mas o `build.js` gerava `dist.txt`. Após identificar o problema, o Dockerfile foi corrigido para copiar e executar o arquivo correto.
+
+Após a correção, a imagem final com multi-stage ficou com **12.9MB** contra **1.63GB** da imagem sem multi-stage
 
 #### Evidência
 
