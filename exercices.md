@@ -4,6 +4,8 @@ Dentro dele instalei o curl (que não existe na imagem base) e fiz uma requisiç
 Ao sair com exit, o container parou mas continuou existindo — visível no docker ps -a com status Exited (0)
 O (0) significa que saiu sem erro
 
+(/imagens/exercicio-2-1.png)
+
 # Exercício 2.1 – Primeiro Dockerfile
 
 ## Comandos
@@ -202,3 +204,55 @@ A aplicação foi configurada para iniciar apenas após o banco estar saudável.
 
 Os serviços foram iniciados com sucesso e os healthchecks retornaram status saudável.
 
+## Exercício 6.1 — Logs e debugging
+
+### Resultado
+
+Foi executado um container em segundo plano.
+
+Os logs foram visualizados utilizando os comandos do Docker.
+
+Também foi possível executar comandos dentro do container e identificar seu endereço IP interno através do inspect.
+
+
+### Exercício 6.2 — Limitar recursos
+
+Executei um container Ubuntu com limite de 256 MB de memória e 0.5 CPU.
+
+Instalei a ferramenta stress e executei testes consumindo memória.
+
+Ao tentar alocar 800 MB e 1 GB de memória, o processo foi encerrado com signal 9, demonstrando que o limite configurado foi aplicado corretamente.
+
+Resultado: o container impediu o uso de memória acima do limite definido.
+
+## Exercício 6.3
+
+Criei uma tag da imagem usando meu usuário do Docker Hub.
+
+Fiz o push da imagem para o Docker Hub com sucesso.
+
+Removi a tag local e realizei o pull novamente.
+
+Executei a imagem baixada e o container iniciou normalmente.
+
+Resultado: a imagem foi publicada, baixada novamente e executada com sucesso.
+
+### Exercício 6.4
+
+Criei o ambiente de desenvolvimento com Docker. Tive dificuldade para acessar o container novamente, mas após utilizar os comandos corretos consegui entrar como root e validar as ferramentas instaladas.
+
+
+### Exercício 6.5
+
+Criei uma aplicação Flask com Docker Compose em modo desenvolvimento. Configurei bind mount para o código-fonte e validei o funcionamento do hot reload ao alterar o arquivo da aplicação.
+
+
+
+### Exercício 6.6
+
+Criei uma imagem utilizando um usuário sem privilégios de administrador. Ao executar o container, o comando whoami retornou o usuário criado, comprovando que a aplicação não estava rodando como root.
+
+
+### Exercício 6.7
+
+Listei as imagens e recursos do Docker. Em seguida executei a limpeza com docker system prune e docker volume prune. Foram removidos volumes não utilizados e recuperados aproximadamente 145 MB de espaço.
