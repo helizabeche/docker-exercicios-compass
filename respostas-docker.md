@@ -38,12 +38,25 @@ Foi possível visualizar containers em execução, todos os containers existente
 #### Descrição
 Foi executado um container Ubuntu em modo interativo. Dentro dele foi instalado o pacote `curl` e realizada uma requisição HTTP para o site httpbin.
 
+#### Comandos executados
+
+```bash
+docker run -it ubuntu bash
+
+apt-get update
+apt-get install -y curl
+curl https://httpbin.org/get
+
+exit
+
+docker ps -a
+```
+
 #### Resultado
-O container permitiu execução de comandos, instalação de pacotes e retorno de uma resposta JSON via HTTP. O estado `Exited (0)` confirma encerramento normal.
+O container permitiu execução de comandos, instalação de pacotes e retornou uma resposta JSON via HTTP confirmando a requisição. O estado `Exited (0)` indica que o container encerrou normalmente após o comando `exit`, mas ainda existe e pode ser visualizado com `docker ps -a`.
 
 #### Evidência
 ![Exercício 1.3](./imagens/exercicio-1-3.webp)
-
 ---
 
 ### Exercício 1.4 — Imagens Docker
