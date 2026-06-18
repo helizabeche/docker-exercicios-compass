@@ -57,6 +57,7 @@ Foi possível visualizar imagens locais, baixar a imagem `nginx:alpine` e remove
 
 #### Evidência
 ![Exercício 1.4](./imagens/exercicio-1-4.webp)
+![Exercício 1.4b](./imagens/exercicio-1-4b.webp)
 
 ---
 
