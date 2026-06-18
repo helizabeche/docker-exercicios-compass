@@ -57,7 +57,7 @@ Foi possível visualizar imagens locais, baixar a imagem `nginx:alpine` e remove
 
 #### Evidência
 ![Exercício 1.4](./imagens/exercicio-1-4.webp)
-![Exercício 1.4b](./imagens/exercicio-1-4b.webp)
+![Exercício 1.4b](./imagens/exercicio-1-4b.png)
 
 ---
 
@@ -120,6 +120,7 @@ O build da imagem ocorreu corretamente e apenas os arquivos necessários foram i
 #### Evidência
 
 ![Exercício 2.3](./imagens/exercicio-2-3.webp)
+![Exercício 2.3](./imagens/exercicio-2-3b.webp)
 
 
 ---
@@ -130,9 +131,19 @@ O build da imagem ocorreu corretamente e apenas os arquivos necessários foram i
 
 Foi implementado um Dockerfile com multi-stage build para otimizar o tamanho final da imagem. O processo separa a etapa de build da aplicação da etapa de execução.
 
+#### Comandos executados
+
+```bash
+
+docker build --target builder -t node-sem-multistage .
+docker build -t node-com-multistage .
+docker images | findstr "node-sem node-com"
+docker run --rm node-com-multistage
+```
+
 #### Resultado
 
-A imagem final gerada ficou significativamente menor, pois contém apenas o artefato necessário para execução da aplicação, sem dependências de build.
+A imagem final com multi-stage (`node-com-multistage`) ficou com **12.9MB**, enquanto a imagem sem multi-stage (`node-sem-multistage`) ficou com **1.63GB** — uma redução de mais de 99%. Isso ocorre porque o stage final usa `alpine` e contém apenas o artefato gerado, sem as dependências de build do Node.js.
 
 #### Evidência
 
@@ -188,6 +199,7 @@ Qualquer alteração realizada no arquivo HTML local foi refletida imediatamente
 
 ![Exercício 3.2](./imagens/exercicio-3-2.webp)
 ![Exercício 3.2](./imagens/image-3-2.webp)
+![Exercício 3.2](./imagens/atividade-3-2.webp)
 
 ---
 
@@ -292,15 +304,28 @@ Ambiente composto por aplicação, PostgreSQL e Redis foi executado com sucesso 
 
 ---
 
-### Exercício 5.3 — Volumes e networks
+### Exercício 5.3 — Volumes e networks no Compose
 
 #### Descrição
 
 Foram configurados volumes nomeados e redes customizadas para garantir comunicação entre serviços e persistência de dados.
 
+#### Comandos executados
+
+```bash
+docker compose up -d
+
+docker compose exec db psql -U heliz -d teste -c "CREATE TABLE teste (id SERIAL PRIMARY KEY, nome VARCHAR(50)); INSERT INTO teste (nome) VALUES ('Alice'), ('Thiago');"
+docker compose down
+docker compose up -d
+docker compose exec db psql -U heliz -d teste -c "SELECT * FROM teste;"
+```
+
 #### Resultado
 
-Volumes e redes foram configurados corretamente, garantindo persistência de dados mesmo após recriação dos containers.
+Durante a execução foi encontrado um erro: o PostgreSQL 18+ mudou o comportamento do volume, exigindo o mount em `/var/lib/postgresql` ao invés de `/var/lib/postgresql/data` como nas versões anteriores. Após identificar o problema nos logs com `docker compose logs db`, foi removido o volume antigo com `docker volume rm exercicio-5-3_postgres-dados` e o compose foi ajustado corretamente.
+
+Após a correção, os dados persistiram normalmente.
 
 #### Evidência
 
